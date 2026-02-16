@@ -14,6 +14,7 @@ from app.internal.models import (
 from app.util import json_type
 from app.util.db import get_session
 from app.util.log import logger
+
 PLACEHOLDER_COVER_URL = "https://picsum.photos/id/24/500/500"
 
 
