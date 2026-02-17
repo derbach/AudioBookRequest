@@ -7,7 +7,7 @@ from aiohttp import ClientSession
 from rapidfuzz import fuzz, utils
 from sqlmodel import Session
 
-from app.internal.models import Audiobook, ProwlarrSource
+from app.internal.models import Audiobook, ManualBookRequest, ProwlarrSource
 from app.internal.ranking.quality import quality_config
 from app.internal.ranking.quality_extract import Quality, extract_qualities
 from app.util.log import logger
@@ -22,7 +22,7 @@ async def rank_sources(
     session: Session,
     client_session: ClientSession,
     sources: list[ProwlarrSource],
-    book: Audiobook,
+    book: Audiobook | ManualBookRequest,
     is_manual: bool = False,
 ) -> list[ProwlarrSource]:
     async def get_qualities(source: ProwlarrSource):
@@ -40,7 +40,7 @@ async def rank_sources(
 
 @final
 class CompareSource:
-    def __init__(self, session: Session, book: Audiobook, is_manual: bool = False):
+    def __init__(self, session: Session, book: Audiobook | ManualBookRequest, is_manual: bool = False):
         self.session = session
         self.book = book
         self.is_manual = is_manual
