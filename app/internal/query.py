@@ -57,7 +57,7 @@ async def query_sources(
         book = session.get(ManualBookRequest, uuid_obj)
     except ValueError:
         # Standard Audiobook ASIN
-        book = session.exec(select(Audiobook).where(Audiobook.asin == asin)).first()
+        book = session.get(Audiobook, asin)
     if not book:
         raise HTTPException(status_code=404, detail="Book not found")
 

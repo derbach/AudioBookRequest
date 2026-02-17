@@ -80,10 +80,10 @@ async def extract_qualities(
     if not api_key:
         raise ValueError("Prowlarr API key not set")
 
-    book_seconds = getattr(book, "runtime_length_min", 0) * 60
+    if isinstance(book, ManualBookRequest):
+        return [Quality(kbits=0, file_format="unknown")]
+    book_seconds = book.runtime_length_min * 60
     if book_seconds == 0:
-        if isinstance(book, ManualBookRequest):
-            return [Quality(kbits=0, file_format="unknown")]
         return []
 
     data = None
